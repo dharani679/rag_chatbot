@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3GPP RAG Chat</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header class="header">
+        <div>
+          <h1>3GPP RAG Chat</h1>
+          <p>Upload a PDF and ask questions from the document.</p>
+        </div>
+        <div class="status-chip" id="connectionChip">Disconnected</div>
+      </header>
+
+      <section class="panel">
+        <div class="field">
+          <label for="apiBase">API Base URL</label>
+          <input id="apiBase" type="text" placeholder="http://127.0.0.1:8056" />
+        </div>
+
+        <div class="field">
+          <label for="documentId">Active Document ID</label>
+          <input id="documentId" type="text" placeholder="optional" />
+        </div>
+
+        <div class="row">
+          <button id="saveConfigBtn" class="secondary" type="button">Save</button>
+          <button id="connectBtn" class="primary" type="button">Connect Chat</button>
+          <button id="disconnectBtn" class="secondary" type="button">Disconnect</button>
+        </div>
+      </section>
+
+      <section class="content">
+        <section class="panel">
+          <h2>Upload PDF</h2>
+          <div class="status-chip small" id="uploadState">Idle</div>
+
+          <form id="uploadForm" class="stack">
+            <input id="pdfFile" type="file" accept="application/pdf,.pdf" />
+            <div class="row">
+              <button type="submit" class="primary">Upload</button>
+              <button type="button" id="clearUploadBtn" class="secondary">Clear</button>
+            </div>
+          </form>
+
+          <p><strong>Document:</strong> <span id="uploadedName">None</span></p>
+          <p><strong>Pages:</strong> <span id="pageCount">-</span></p>
+          <p><strong>Chunks:</strong> <span id="chunkCount">-</span></p>
+
+          <div class="progress">
+            <div class="progress-bar" id="progressBar"></div>
+          </div>
+
+          <pre class="log" id="uploadLog">Upload a PDF to begin.</pre>
+        </section>
+
+        <section class="panel">
+          <h2>Chat</h2>
+          <div class="status-chip small" id="chatState">Disconnected</div>
+
+          <div id="chatFeed" class="chat-feed" aria-live="polite"></div>
+
+          <form id="chatForm" class="stack">
+            <textarea
+              id="questionInput"
+              rows="4"
+              placeholder="Ask a question about the uploaded 3GPP standards..."
+            ></textarea>
+            <button type="submit" class="primary">Send</button>
+          </form>
+
+          <details>
+            <summary>Last answer sources</summary>
+            <div id="sourcesList" class="sources-list"></div>
+          </details>
+        </section>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
